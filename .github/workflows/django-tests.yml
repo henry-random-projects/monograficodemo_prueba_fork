@@ -2,7 +2,10 @@ name: Django Tests
 
 on:
   push:
+    branches: [ main ]
+
   pull_request:
+    branches: [ main ]  # ✅ only PRs targeting main
 
 jobs:
   test:
@@ -10,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: source/django/core 
+        working-directory: source/django/core
 
     steps:
       - name: Checkout repo
@@ -20,16 +23,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Set environment
         run: echo "DJANGO_ENVIRONMENT=development" >> $GITHUB_ENV
 
       - name: Run migrations
-        run: python manage.py migrate
+        run: python manage.py migrate --noinput
 
       - name: Run tests
         run: python manage.py test
