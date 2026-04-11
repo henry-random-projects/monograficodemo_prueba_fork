@@ -1,3 +1,9 @@
+# This workflow implements Continuous Integration (CI) for the Django project.
+# It automatically runs every time code is pushed or a pull request is created.
+# The pipeline installs dependencies, applies database migrations,
+# and executes tests to ensure the application is working correctly.
+# This helps catch errors early and prevents broken code from being merged.
+
 name: Django Tests
 
 on:
